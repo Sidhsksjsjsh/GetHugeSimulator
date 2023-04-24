@@ -195,6 +195,13 @@ local Window = library:AddWindow("Orin - Cheat [Trial stage]",
     
 local b = Window:AddTab("AutoFarm")
 
+local console = b:AddConsole({
+    ["y"] = 50,
+    ["source"] = "",
+})
+
+console:Set("message not found here...")
+
 b:AddSwitch("Auto Lift", function(val)
 getgenv().Lift = val
 Lift()
@@ -227,7 +234,11 @@ end)
 
 b:AddSwitch("Auto teleport to easter boss", function(val)
 getgenv().EasterWarrior = val
+if game:GetService("Workspace").BossModels:FindfirstChild("EasterWarrior") then
 EasterWarrior()
+else
+console:Set("Error: we couldn't find a boss named 'EasterWarrior'")
+end
 end)
 
 local EggListTable = b:AddDropdown("Select egg", function(val)
