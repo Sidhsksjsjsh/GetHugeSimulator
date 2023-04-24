@@ -6,6 +6,8 @@ getgenv().Lift = false;
 getgenv().Sell = false;
 getgenv().Attack = false;
 getgenv().Territory = false;
+getgenv().EasterTraining = false;
+getgenv().EasterWarrior = false;
 
 function TPTo(PCFrame)
     local plr = game.Players.LocalPlayer;
@@ -22,7 +24,7 @@ getgenv().Grav = false;
 
 local S = 16
 local J = 50
-local H = 3
+local H = 0.1
 local G = 198
 
 function Chat(Mes, Freq)
@@ -122,20 +124,25 @@ local args = {[1] = 16,[2] = "BodyUpgrade",[3] = "Islands"} game:GetService("Rep
         end
     end)
 end
+
 function Lift()
     spawn(function ()
         while getgenv().Lift == true do
-game:GetService("ReplicatedStorage").Remotes.LiftWeight:FireServer() wait(0.1)
+game:GetService("ReplicatedStorage").Remotes.LiftWeight:FireServer() 
+wait()
         end
     end)
 end
+
 function Sell()
     spawn(function ()
         while getgenv().Sell == true do
-game:GetService("ReplicatedStorage").Remotes.SellStrengthRequest:FireServer() wait(0.1)
+game:GetService("ReplicatedStorage").Remotes.SellStrengthRequest:FireServer()
+wait()
         end
     end)
 end
+
 function Attack()
     spawn(function ()
         while getgenv().Attack == true do
@@ -143,6 +150,27 @@ local args = {[1] = "Punch",[2] = 2} game:GetService("ReplicatedStorage").Remote
         end
     end)
 end
+
+--[[
+game:GetService("ReplicatedStorage").Remotes.Machines.AttemptMachineTraining:InvokeServer()
+
+game:GetService("Workspace").BossModels.EasterWarrior.Hitbox
+--]]
+
+function EasterWarrior()
+     while getgenv().EasterWarrior == true do
+     TPTo(game:GetService("Workspace").BossModels.EasterWarrior.Hitbox.CFrame)
+     wait()
+   end
+end
+
+function EasterTraining()
+     while getgenv().EasterTraining == true do
+     game:GetService("ReplicatedStorage").Remotes.Machines.AttemptMachineTraining:InvokeServer()
+     wait()
+  end
+end
+
 function Territorial()
     spawn(function ()
         while getgenv().Territory == true do
@@ -190,6 +218,16 @@ end)
 b:AddSwitch("Capture Territory", function(val)
 getgenv().Territory = val
 Territorial()
+end)
+
+b:AddSwitch("Auto training (easter)", function(val)
+getgenv().EasterTraining = val
+EasterTraining()
+end)
+
+b:AddSwitch("Auto teleport to easter boss", function(val)
+getgenv().EasterWarrior = val
+EasterWarrior()
 end)
 
 local EggListTable = b:AddDropdown("Select egg", function(val)
