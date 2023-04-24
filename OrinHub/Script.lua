@@ -234,11 +234,7 @@ end)
 
 b:AddSwitch("Auto teleport to easter boss", function(val)
 getgenv().EasterWarrior = val
-if game:GetService("Workspace").BossModels:FindfirstChild("EasterWarrior") then
 EasterWarrior()
-else
-console:Set("Error: we couldn't find a boss named 'EasterWarrior'")
-end
 end)
 
 local EggListTable = b:AddDropdown("Select egg", function(val)
