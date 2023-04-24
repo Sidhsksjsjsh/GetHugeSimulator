@@ -7,6 +7,85 @@ getgenv().Sell = false;
 getgenv().Attack = false;
 getgenv().Territory = false;
 
+function TPTo(PCFrame)
+    local plr = game.Players.LocalPlayer;
+           if plr.Character then
+            plr.Character.HumanoidRootPart.CFrame = PCFrame
+        end
+    end
+ 
+getgenv().Speed = false;
+getgenv().Jump = false;
+getgenv().Hip = false;
+getgenv().Chat = false;
+getgenv().Grav = false;
+
+local S = 16
+local J = 50
+local H = 3
+local G = 198
+
+function Chat(Mes, Freq)
+    spawn(function ()
+        while getgenv().Chat == true do
+local args = {[1] = Mes,[2] = "All"} game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
+wait(Freq)
+        end
+    end)
+end
+ 
+function Speed(Nume)
+    spawn(function ()
+        if getgenv().Speed == true then
+            while getgenv().Speed == true do
+                game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = Nume
+                wait()
+            end
+        elseif getgenv().Speed == false then
+            game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 16
+        end
+    end)
+end
+
+function Jump(Nume)
+    spawn(function ()
+        if getgenv().Jump == true then
+            while getgenv().Jump == true do
+                game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = Nume
+                wait()
+        end
+    elseif getgenv().Jump == false then
+            game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = 50
+        end
+    end)
+end
+
+function Hip(Nume)
+    spawn(function ()
+        if getgenv().Hip == true then
+            while getgenv().Hip == true do
+            game:GetService("Players").LocalPlayer.Character.Humanoid.HipHeight = Nume
+            wait()
+        end
+    elseif getgenv().Hip == false then
+            game:GetService("Players").LocalPlayer.Character.Humanoid.HipHeight = 0.1
+        end
+    end)
+end
+
+function Grav(Nume)
+    spawn(function ()
+        if getgenv().Grav == true then
+            while getgenv().Grav == true do
+                game:GetService("Workspace").Gravity = Nume
+            wait()
+        end
+    elseif getgenv().Grav == false then
+        game:GetService("Workspace").Gravity = 196.2
+        end
+    end)
+end
+
 function Open()
     spawn(function ()
         while getgenv().Egg == true do
@@ -79,12 +158,13 @@ end
 local library = loadstring(game:HttpGet("https://pastebin.com/raw/Uub92rmN"))()
 
 
-local Window = library:AddWindow("Orin - Cheat",
+local Window = library:AddWindow("Orin - Cheat [Trial stage]",
     {
         main_color = Color3.fromRGB(0, 128, 0),
         min_size = Vector2.new(373, 433),
         toggle_key = Enum.KeyCode.RightShift,
     })
+    
 local b = Window:AddTab("AutoFarm")
 
 b:AddSwitch("Auto Lift", function(val)
@@ -130,7 +210,7 @@ end)
 
 local c = Window:AddTab("Miscellaneous")
 
-C:AddButton("Redeem Codes", function()
+c:AddButton("Redeem Codes", function()
 local args = {[1] = "russo"} game:GetService("ReplicatedStorage").Remotes.ProcessPromoCode:InvokeServer(unpack(args)) wait()
 local args = {[1] = "gaming_dan"} game:GetService("ReplicatedStorage").Remotes.ProcessPromoCode:InvokeServer(unpack(args)) wait()
 local args = {[1] = "tofuu"} game:GetService("ReplicatedStorage").Remotes.ProcessPromoCode:InvokeServer(unpack(args)) wait()
@@ -195,75 +275,3 @@ end)
 dv:AddButton("Full LocalPlayer", function()
     loadstring(game:HttpGet("https://pastebin.com/raw/GphZf9Xe"))()
 end)
- 
- 
-function TPTo(PCFrame)
-    local plr = game.Players.LocalPlayer;
-           if plr.Character then
-            plr.Character.HumanoidRootPart.CFrame = PCFrame
-        end
-    end
- 
-getgenv().Speed = false;
-getgenv().Jump = false;
-getgenv().Hip = false;
-getgenv().Chat = false;
-getgenv().Grav = false;
- 
-function Chat(Mes, Freq)
-    spawn(function ()
-        while getgenv().Chat == true do
-local args = {[1] = Mes,[2] = "All"} game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
-wait(Freq)
-        end
-    end)
-end
- 
-function Speed(Nume)
-    spawn(function ()
-        if getgenv().Speed == true then
-            while getgenv().Speed == true do
-                game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = Nume
-                wait()
-            end
-        elseif getgenv().Speed == false then
-            game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 16
-        end
-    end)
-end
-function Jump(Nume)
-    spawn(function ()
-        if getgenv().Jump == true then
-            while getgenv().Jump == true do
-                game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = Nume
-                wait()
-        end
-    elseif getgenv().Jump == false then
-            game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = 50
-        end
-    end)
-end
-function Hip(Nume)
-    spawn(function ()
-        if getgenv().Hip == true then
-            while getgenv().Hip == true do
-            game:GetService("Players").LocalPlayer.Character.Humanoid.HipHeight = Nume
-            wait()
-        end
-    elseif getgenv().Hip == false then
-            game:GetService("Players").LocalPlayer.Character.Humanoid.HipHeight = 0.1
-        end
-    end)
-end
-function Grav(Nume)
-    spawn(function ()
-        if getgenv().Grav == true then
-            while getgenv().Grav == true do
-                game:GetService("Workspace").Gravity = Nume
-            wait()
-        end
-    elseif getgenv().Grav == false then
-        game:GetService("Workspace").Gravity = 196.2
-        end
-    end)
-end
