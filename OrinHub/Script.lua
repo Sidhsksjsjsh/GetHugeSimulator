@@ -15,6 +15,8 @@ getgenv().DNA = false;
 getgenv().BringCoin = false;
 getgenv().BringGem = false;
 getgenv().trade = false;
+getgenv().decline = false;
+getgenv().accept = false;
 
 function TPTo(PCFrame)
     local plr = game.Players.LocalPlayer;
@@ -214,8 +216,31 @@ function dna() -- set the cooldown to 1
 end
 
 function trade()
+while getgenv().trade == true do
 for _,v in pairs(game.Players:GetPlayers()) do
 game:GetService("ReplicatedStorage").Remotes.Trade.SendRequest:InvokeServer(game:GetService("Players")[v.Name])
+end
+wait()
+end
+end
+
+function AcceptTrade()
+while getgenv.accept == true do
+for _,v in pairs(game.Players:GetPlayers()) do
+game:GetService("ReplicatedStorage").Remotes.Trade.AcceptTrade:FireServer()
+game:GetService("ReplicatedStorage").Remotes.Trade.AcceptRequest:InvokeServer(game:GetService("Players")[v.Name])
+end
+wait()
+end
+end
+
+function DecTrade()
+while getgenv.decline == true do
+for _,v in pairs(game.Players:GetPlayers()) do
+game:GetService("ReplicatedStorage").Remotes.Trade.DeclineTrade:FireServer()
+game:GetService("ReplicatedStorage").Remotes.Trade.DeclineRequest:InvokeServer(game:GetService("Players")[v.Name])
+end
+wait()
 end
 end
 
@@ -312,6 +337,16 @@ end)
 b:AddSwitch("spam trade", function(val)
 getgenv().trade = val
 trade()
+end)
+
+b:AddSwitch("auto decline trade", function(val)
+getgenv().decline = val
+DecTrade()
+end)
+
+b:AddSwitch("auto accept trade", function(val)
+getgenv().accept = val
+AcceptTrade()
 end)
 
 local EggListTable = e:AddDropdown("Select egg", function(val)
@@ -451,9 +486,9 @@ end
 workspace.DescendantAdded:Connect(TryApplyBehavior)
 --]]
 
-local IceBossTable = game:GetService("Workspace").BossModels.Ice
-local MagmaBossTable = game:GetService("Workspace").BossModels.Magma
-local EasterBossT = game:GetService("Workspace").BossModels.EasterWarrior
+local IceBossTable = nil
+local MagmaBossTable = nil
+local EasterBossT = nil
 
 function GetBoss()
      if MagmaBossTable then
