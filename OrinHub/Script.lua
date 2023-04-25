@@ -332,6 +332,9 @@ end)
 b:AddSwitch("Auto upgrade dna (time wait: 1)", function(val)
 getgenv().DNA = val
 dna()
+if getgenv().DNA == false then
+DNAtotal = 1
+end
 end)
 
 b:AddSwitch("spam trade", function(val)
