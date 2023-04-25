@@ -8,6 +8,10 @@ getgenv().Attack = false;
 getgenv().Territory = false;
 getgenv().EasterTraining = false;
 getgenv().EasterWarrior = false;
+getgenv().King = false;
+getgenv().Magma = false;
+getgenv().Ice = false;
+getgenv().DNA = false;
 
 function TPTo(PCFrame)
     local plr = game.Players.LocalPlayer;
@@ -171,6 +175,41 @@ function EasterTraining()
   end
 end
 
+--[[
+
+--]]
+
+function MagmaBoss()
+       while getgenv().Magma == true do
+       TPTo(game:GetService("Workspace").BossModels.Magma.Hitbox.CFrame)
+       wait()
+    end
+end
+
+function King()
+      while getgenv().King == true do
+      TPTo(game:GetService("Workspace").Islands.KOTHIsland.KothArena.KothArenabase.CFrame)
+      wait()
+   end
+end
+
+function IceBoss()
+     while getgenv().Ice == true do
+     TPTo(game:GetService("Workspace").BossModels.Ice.Hitbox.CFrame)
+     wait()
+  end
+end
+
+local DNAtotal = 1
+
+function dna() -- set the cooldown to 1
+    while getgenv().DNA == true do
+    game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(DNAtotal,"DNA","Islands")
+    wait(1)
+    DNAtotal = DNAtotal + 1
+  end
+end
+
 function Territorial()
     spawn(function ()
         while getgenv().Territory == true do
@@ -195,12 +234,14 @@ local Window = library:AddWindow("Orin - Cheat [Trial stage]",
     
 local b = Window:AddTab("AutoFarm")
 
+--[[
+
+--]]
+
 local console = b:AddConsole({
     ["y"] = 50,
     ["source"] = "",
 })
-
-console:Set("message not found here...")
 
 b:AddSwitch("Auto Lift", function(val)
 getgenv().Lift = val
@@ -232,9 +273,29 @@ getgenv().EasterTraining = val
 EasterTraining()
 end)
 
-b:AddSwitch("Auto teleport to easter boss", function(val)
+b:AddSwitch("Auto teleport to easter boss (Easter)", function(val)
 getgenv().EasterWarrior = val
 EasterWarrior()
+end)
+
+b:AddSwitch("Auto teleport to magma boss (Island)", function(val)
+getgenv().Magma = val
+MagmaBoss()
+end)
+
+b:AddSwitch("Auto teleport to Ice boss (Easter)", function(val)
+getgenv().Ice = val
+IceBoss()
+end)
+
+b:AddSwitch("Auto teleport to King Place (Island)", function(val)
+getgenv().King = val
+King()
+end)
+
+b:AddSwitch("Auto upgrade dna (time wait: 1)", function(val)
+getgenv().DNA = val
+dna()
 end)
 
 local EggListTable = b:AddDropdown("Select egg", function(val)
@@ -273,6 +334,8 @@ local args = {[1] = "MadGorilla"} game:GetService("ReplicatedStorage").Remotes.P
 local args = {[1] = "Swords"} game:GetService("ReplicatedStorage").Remotes.ProcessPromoCode:InvokeServer(unpack(args)) wait()
 local args = {[1] = "MAD GORILLA"} game:GetService("ReplicatedStorage").Remotes.ProcessPromoCode:InvokeServer(unpack(args)) wait()
 end) 
+
+console:Set("Redeem Codes: \nrusso \ngaminv_dan \ntofuu \nworkoutisland \ngravy \nmortadela \nBuffNoobJr \nSynxCazz \njackedtiger \nbicep \nCAPTAINNOOB \nsummer \nNoobBot \nMadGorilla \nSwords \nMAD GORILLA")
 
 local dv = Window:AddTab("Player")
 
