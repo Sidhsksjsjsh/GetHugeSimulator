@@ -393,6 +393,9 @@ local TagBossMagma = "Missing or been killed"
 local TagBossIce = "Missing or been killed"
 local TagBossEaster = "Missing or been killed"
 
+local titleboss = "Found, kill asap!"
+local nottitle = "Missing or been killed"
+--[[
 function GetBossTable()
   for i,v in pairs(game:GetService("Workspace").BossModels:GetChildren()) do
      if v.Name == "Magma" and v.Parent:IsA("BossModels") then
@@ -418,8 +421,40 @@ function GetBossTable()
      end
    end
 end
+--]]
+
+--[[
+function AddIce(item)
+	if item.Name == "Ice" and item.Parent:IsA("BossModels") then
+		TagBossIce = titleboss
+	end
+end
+
+for _, Strip in ipairs(workspace.BossModels:GetDescendants()) do
+	TryApplyBehavior(Strip)
+end
+workspace.DescendantAdded:Connect(TryApplyBehavior)
+--]]
+
+function GetBoss()
+     if game:GetService("Workspace").BossModels.Magma then
+          TagBossMagma = titleboss
+      else
+          TagBossMagma = nottitle
+     end
+     if game:GetService("Workspace").BossModels.Ice then
+          TagBossIce = titleboss
+      else
+          TagBossIce = nottitle
+     end
+     if game:GetService("Workspace").BossModels.EasterWarrior then
+          TagBossEaster = titleboss
+      else
+          TagBossEaster = nottitle
+     end
+end
 
 while wait(0.5) do
 console:Set("Magma: " .. TagBossMagma .. " \nIce: " .. TagBossIce .. " \nEaster Warrior: " .. TagBossEaster)
-GetBossTable()
+GetBoss()
 end
