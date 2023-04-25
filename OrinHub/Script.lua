@@ -12,6 +12,9 @@ getgenv().King = false;
 getgenv().Magma = false;
 getgenv().Ice = false;
 getgenv().DNA = false;
+getgenv().BringCoin = false;
+getgenv().BringGem = false;
+getgenv().trade = false;
 
 function TPTo(PCFrame)
     local plr = game.Players.LocalPlayer;
@@ -210,6 +213,12 @@ function dna() -- set the cooldown to 1
   end
 end
 
+function trade()
+for _,v in pairs(game.Players:GetPlayers()) do
+game:GetService("ReplicatedStorage").Remotes.Trade.SendRequest:InvokeServer(game:GetService("Players")[v.Name])
+end
+end
+
 function Territorial()
     spawn(function ()
         while getgenv().Territory == true do
@@ -235,6 +244,7 @@ local Window = library:AddWindow("Orin - Cheat [Trial stage]",
 local b = Window:AddTab("AutoFarm")
 
 local boss = Window:AddTab("Boss Farm")
+local e = Window:AddTab("Egg")
 --[[
 
 --]]
@@ -299,7 +309,12 @@ getgenv().DNA = val
 dna()
 end)
 
-local EggListTable = b:AddDropdown("Select egg", function(val)
+b:AddSwitch("spam trade", function(val)
+getgenv().trade = val
+trade()
+end)
+
+local EggListTable = e:AddDropdown("Select egg", function(val)
 EV = val
 end)
 
@@ -310,7 +325,7 @@ EggListTable:Add("Emerald Egg")
 EggListTable:Add("Heaven's Egg")
 EggListTable:Add("Santa's Egg")
 
-b:AddSwitch("Auto Hatch", function(val)
+e:AddSwitch("Auto Hatch", function(val)
 getgenv().Egg = val
 Open()
 end)
@@ -336,7 +351,7 @@ local args = {[1] = "Swords"} game:GetService("ReplicatedStorage").Remotes.Proce
 local args = {[1] = "MAD GORILLA"} game:GetService("ReplicatedStorage").Remotes.ProcessPromoCode:InvokeServer(unpack(args)) wait()
 end) 
 
-c:AddLabel("Redeem Codes: \nrusso \ngaminv_dan \ntofuu \nworkoutisland \ngravy \nmortadela \nBuffNoobJr \nSynxCazz \njackedtiger \nbicep \nCAPTAINNOOB \nsummer \nNoobBot \nMadGorilla \nSwords \nMAD GORILLA")
+-- c:AddLabel("Redeem Codes: \nrusso \ngaminv_dan \ntofuu \nworkoutisland \ngravy \nmortadela \nBuffNoobJr \nSynxCazz \njackedtiger \nbicep \nCAPTAINNOOB \nsummer \nNoobBot \nMadGorilla \nSwords \nMAD GORILLA")
 
 local dv = Window:AddTab("Player")
 
@@ -436,21 +451,28 @@ end
 workspace.DescendantAdded:Connect(TryApplyBehavior)
 --]]
 
+local IceBossTable = game:GetService("Workspace").BossModels.Ice
+local MagmaBossTable = game:GetService("Workspace").BossModels.Magma
+local EasterBossT = game:GetService("Workspace").BossModels.EasterWarrior
+
 function GetBoss()
-     if game:GetService("Workspace").BossModels.Magma then
+     if MagmaBossTable then
           TagBossMagma = titleboss
       else
           TagBossMagma = nottitle
+	  MagmaBossTable = game:GetService("Workspace").BossModels.Magma
      end
-     if game:GetService("Workspace").BossModels.Ice then
+     if IceBossTable then
           TagBossIce = titleboss
       else
           TagBossIce = nottitle
+	  IceBossTable = game:GetService("Workspace").BossModels.Ice
      end
-     if game:GetService("Workspace").BossModels.EasterWarrior then
+     if EasterBossT then
           TagBossEaster = titleboss
       else
           TagBossEaster = nottitle
+	  EasterBossT = game:GetService("Workspace").BossModels.EasterWarrior
      end
 end
 
