@@ -234,11 +234,12 @@ local Window = library:AddWindow("Orin - Cheat [Trial stage]",
     
 local b = Window:AddTab("AutoFarm")
 
+local boss = Window:AddTab("Boss Farm")
 --[[
 
 --]]
 
-local console = b:AddConsole({
+local console = boss:AddConsole({
     ["y"] = 50,
     ["source"] = "",
 })
@@ -268,22 +269,22 @@ getgenv().Territory = val
 Territorial()
 end)
 
-b:AddSwitch("Auto training (easter)", function(val)
+boss:AddSwitch("Auto training (easter)", function(val)
 getgenv().EasterTraining = val
 EasterTraining()
 end)
 
-b:AddSwitch("Auto teleport to easter boss (Easter)", function(val)
+boss:AddSwitch("Auto teleport to easter boss (Easter)", function(val)
 getgenv().EasterWarrior = val
 EasterWarrior()
 end)
 
-b:AddSwitch("Auto teleport to magma boss (Island)", function(val)
+boss:AddSwitch("Auto teleport to magma boss (Island)", function(val)
 getgenv().Magma = val
 MagmaBoss()
 end)
 
-b:AddSwitch("Auto teleport to Ice boss (Easter)", function(val)
+boss:AddSwitch("Auto teleport to Ice boss (Island)", function(val)
 getgenv().Ice = val
 IceBoss()
 end)
@@ -335,7 +336,7 @@ local args = {[1] = "Swords"} game:GetService("ReplicatedStorage").Remotes.Proce
 local args = {[1] = "MAD GORILLA"} game:GetService("ReplicatedStorage").Remotes.ProcessPromoCode:InvokeServer(unpack(args)) wait()
 end) 
 
-console:Set("Redeem Codes: \nrusso \ngaminv_dan \ntofuu \nworkoutisland \ngravy \nmortadela \nBuffNoobJr \nSynxCazz \njackedtiger \nbicep \nCAPTAINNOOB \nsummer \nNoobBot \nMadGorilla \nSwords \nMAD GORILLA")
+c:AddLabel("Redeem Codes: \nrusso \ngaminv_dan \ntofuu \nworkoutisland \ngravy \nmortadela \nBuffNoobJr \nSynxCazz \njackedtiger \nbicep \nCAPTAINNOOB \nsummer \nNoobBot \nMadGorilla \nSwords \nMAD GORILLA")
 
 local dv = Window:AddTab("Player")
 
@@ -379,7 +380,44 @@ dv:AddSwitch("Set gravity", function(bool)
 getgenv().Grav = bool
 Grav(G)
 end) 
- 
+
 dv:AddButton("Full LocalPlayer", function()
     loadstring(game:HttpGet("https://pastebin.com/raw/GphZf9Xe"))()
 end)
+
+local MagmaTable = false
+local IceTable = false
+local EasterTable = false
+
+local TagBossMagma = "Missing or been killed"
+local TagBossIce = "Missing or been killed"
+local TagBossEaster = "Missing or been killed"
+
+function GetBossTable()
+     if game:GetService("Workspace").BossModel:FindfirstChild("Magma") or game:GetService("Workspace").BossModel:FindfirstChildOfClass("Magma") then
+          MagmaTable = true
+          TagBossMagma = "Found. kill asap!"
+       else
+          MagmaTable = false
+          TagBossMagma = "Missing or been killed"
+     end
+     if game:GetService("Workspace").BossModel:FindfirstChild("Ice") or game:GetService("Workspace").BossModel:FindfirstChildOfClass("Ice") then
+          IceTable = true
+          TagBossIce = "Found, kill asap!"
+       else
+          IceTable = false
+          TagBossIce = "Missing or been killed"
+     end
+     if game:GetService("Workspace").BossModel:FindfirstChild("EasterWarrior") or game:GetService("Workspace").BossModel:FindfirstChildOfClass("EasterWarrior") then
+          EasterTable = true
+          TagBossEaster = "Found, kill asap!"
+       else
+          EasterTable = false
+          TagBossEaster = "Missing or been killed"
+     end
+end
+
+while wait(0.5) do
+console:Set("Magma: " .. TagBossMagma .. " \nIce: " .. TagBossIce .. " \nEaster Warrior: " .. TagBossEaster)
+GetBossTable()
+end
