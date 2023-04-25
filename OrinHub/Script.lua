@@ -394,27 +394,29 @@ local TagBossIce = "Missing or been killed"
 local TagBossEaster = "Missing or been killed"
 
 function GetBossTable()
-     if game:GetService("Workspace").BossModels:FindfirstChild("Magma") or game:GetService("Workspace").BossModels:FindfirstChildOfClass("Magma") then
+  for i,v in pairs(game:GetService("Workspace").BossModels:GetChildren()) do
+     if v.Name == "Magma" and v.Parent:IsA("BossModels") then
           MagmaTable = true
           TagBossMagma = "Found. kill asap!"
        else
           MagmaTable = false
           TagBossMagma = "Missing or been killed"
      end
-     if game:GetService("Workspace").BossModels:FindfirstChild("Ice") or game:GetService("Workspace").BossModels:FindfirstChildOfClass("Ice") then
+     if v.Name == "Ice" and v.Parent:IsA("BossModels") then
           IceTable = true
           TagBossIce = "Found, kill asap!"
        else
           IceTable = false
           TagBossIce = "Missing or been killed"
      end
-     if game:GetService("Workspace").BossModels:FindfirstChild("EasterWarrior") or game:GetService("Workspace").BossModels:FindfirstChildOfClass("EasterWarrior") then
+     if v.Name == "EasterWarrior" and v.Parent:IsA("BossModels") then
           EasterTable = true
           TagBossEaster = "Found, kill asap!"
        else
           EasterTable = false
           TagBossEaster = "Missing or been killed"
      end
+   end
 end
 
 while wait(0.5) do
