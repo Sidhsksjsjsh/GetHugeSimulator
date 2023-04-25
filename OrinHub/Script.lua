@@ -269,7 +269,7 @@ getgenv().Territory = val
 Territorial()
 end)
 
-boss:AddSwitch("Auto training (easter)", function(val)
+b:AddSwitch("Auto training (easter)", function(val)
 getgenv().EasterTraining = val
 EasterTraining()
 end)
